@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { peek, push, pop, Heap, Node } from "../src/MinHeap";
+import { peek, push, pop, Heap, Node } from "../SchedulerMinHeap";
 
 let counter = 0;
 const createNode = (val: number): Node => {

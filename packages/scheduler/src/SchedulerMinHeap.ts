@@ -1,8 +1,9 @@
 type Heap<T extends Node> = Array<T>;
 
-interface Node {
-  id: number;
-  sortIndex: number;
+type Node = {
+  id: number,
+  sortIndex: number,
+  [string: string]: any
 };
 
 /**
@@ -10,7 +11,7 @@ interface Node {
  * @param heap The min-heap array
  * @returns The minimum element or null if the heap is empty
  */
-const peek = <T extends Node>(heap: Heap<T>): T | null => {
+export function peek<T extends Node>(heap: Heap<T>): T | null {
   return heap.length === 0 ? null : heap[0];
 };
 /**
@@ -18,7 +19,7 @@ const peek = <T extends Node>(heap: Heap<T>): T | null => {
  * @param heap min-heap array
  * @param node The node to be pushed
  */
-const push = <T extends Node> (heap: Heap<T>, node: T): void => {
+export function push<T extends Node>(heap: Heap<T>, node: T): void {
   const index = heap.length;
   heap.push(node);
   siftUp(heap, index);
@@ -28,7 +29,7 @@ const push = <T extends Node> (heap: Heap<T>, node: T): void => {
  * pop the minimum element from the heap
  * @param heap The min-heap array
  */
-const pop = (heap: Heap<Node>): Node | null => {
+export function pop(heap: Heap<Node>): Node | null {
   if (heap.length === 0) return null;
   
   const first = heap[0];
@@ -46,7 +47,7 @@ const pop = (heap: Heap<Node>): Node | null => {
  * @param heap The min-heap array
  * @param index The index of the node to be sifted up
  */
-const siftUp = <T extends Node>(heap: Heap<T>, index: number): void => {
+function siftUp<T extends Node>(heap: Heap<T>, index: number): void {
   const node = heap[index];
   while (index > 0) {
     const parentIndex = (index - 1) >>> 1;
@@ -66,7 +67,7 @@ const siftUp = <T extends Node>(heap: Heap<T>, index: number): void => {
  * @param heap The min-heap array
  * @param index The index of the node to be sifted down
  */
-const siftDown = <T extends Node>(heap: Heap<T>, index: number): void => {
+function siftDown<T extends Node>(heap: Heap<T>, index: number): void {
   const length = heap.length;
   const node = heap[index];
   while (true) {
@@ -105,9 +106,9 @@ const siftDown = <T extends Node>(heap: Heap<T>, index: number): void => {
  * @param b the second node to be compared
  * @returns Negative if a < b, positive if a > b, zero if equal
  */
-const compare = (a: Node, b: Node): number => {
+function compare(a: Node, b: Node): number {
   const diff = a.sortIndex - b.sortIndex;
   return diff !== 0 ? diff : a.id - b.id;
-};
+}
 
-export { peek, push, pop, Heap, Node };
+export { Heap, Node };
